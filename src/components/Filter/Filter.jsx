@@ -1,15 +1,12 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Label, Form, InputName, TextFilter } from './Filter.styled';
 
-import { getFilter } from 'Redux/slice';
+import { setFilter } from 'Redux/filterSlice';
+import { filterValue } from 'Redux/selectors';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-
-  const handlerChange = e => {
-    const filterValue = e.target.value;
-    dispatch(getFilter(filterValue));
-  };
+  const filter = useSelector(filterValue);
   return (
     <Form>
       <Label>
@@ -19,7 +16,8 @@ export const Filter = () => {
           name="filter"
           title="find some contact"
           required
-          onChange={handlerChange}
+          value={filter}
+          onChange={e => dispatch(setFilter(e.target.value))}
         />
       </Label>
     </Form>
